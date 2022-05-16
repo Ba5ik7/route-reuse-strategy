@@ -11,7 +11,12 @@ const routes: Routes = [
       { 
         path: 'parent-child-design-solution-one',
         component: ParentChildDesignSolutionOneComponent,
-        outlet: 'terry'
+        outlet: 'solution-one'
+      },
+      { 
+        path: 'parent-child-design-solution-two',
+        loadChildren: () => import('./child-design-solution-two/child-design-solution-two.module').then(m => m.ChildDesignSolutionTwoModule),
+        outlet: 'solution-two'
       }
     ]
   }

@@ -10,9 +10,16 @@
     <mat-card>
       <h1>Live Example</h1>
       <p>We can test and see how this setup meets our needs when navigating between detail pages:</p>
-      <a [routerLink]="[{ outlets: { terry: ['parent-child-design-solution-one'] } }]">parent-child-design-solution-one</a>
+      <a [routerLink]="['/parent-child-design', { outlets: { 'solution-one': ['parent-child-design-solution-one'] } }]">parent-child-design-solution-one</a>
       <!-- <router-outlet></router-outlet> -->
-      <router-outlet name="terry"></router-outlet>
+      <router-outlet name="solution-one"></router-outlet>
+    </mat-card>
+    <mat-card>
+      <h1>Live Example</h1>
+      <p>We can test and see how this setup meets our needs when navigating between detail pages:</p>
+      <a [routerLink]="['/parent-child-design', { outlets: { 'solution-two': ['parent-child-design-solution-two'] } }]">parent-child-design-solution-two</a>
+      <!-- <router-outlet></router-outlet> -->
+      <router-outlet name="solution-two"></router-outlet>
     </mat-card>
     <mat-card class="next-section-button" routerLink="/parent-child-design">
       Next Section
