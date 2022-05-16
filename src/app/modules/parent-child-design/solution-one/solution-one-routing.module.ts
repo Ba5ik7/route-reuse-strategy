@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailsComponent } from 'src/app/shared/components/details/details.component';
-import { ParentChildDesignSolutionOneComponent } from './parent-child-design-solution-one.component';
+import { SolutionOneComponent } from './solution-one.component';
 
 const routes: Routes = [
   {
     path: '', 
-    component: ParentChildDesignSolutionOneComponent,
+    component: SolutionOneComponent,
     children: [
       {
           path: 'detail/:detailId',
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ParentChildDesignSolutionOneRoutingModule { }
+export class SolutionOneRoutingModule { }

@@ -8,8 +8,8 @@ const routes: Routes = [
     component: ParentChildDesignComponent,
     children: [
       { 
-        path: 'parent-child-design-solution-one',
-        loadChildren: () => import('./solution-one/parent-child-design-solution-one.module').then(m => m.ParentChildDesignSolutionOneModule),
+        path: 'solution-one',
+        loadChildren: () => import('./solution-one/solution-one.module').then(m => m.SolutionOneModule),
         outlet: 'solution-one'
       },
       { 
