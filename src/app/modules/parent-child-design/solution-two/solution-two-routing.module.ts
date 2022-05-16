@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailsComponent } from 'src/app/shared/components/details/details.component';
-import { ParentChildDesignSolutionTwoComponent } from './parent-child-design-solution-two.component';
+import { SolutionTwoComponent } from './solution-two.component';
 
 const routes: Routes = [
   {
     path: '', 
-    component: ParentChildDesignSolutionTwoComponent,
+    component: SolutionTwoComponent,
     data: { alwaysRefresh: true },
     children: [
       {
@@ -22,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ParentChildDesignSolutionTwoRoutingModule { }
+export class TwoRoutingModule { }

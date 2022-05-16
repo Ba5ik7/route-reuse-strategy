@@ -9,17 +9,17 @@ const routes: Routes = [
     children: [
       { 
         path: 'parent-child-design-solution-one',
-        loadChildren: () => import('./parent-child-design-solution-one/parent-child-design-solution-one.module').then(m => m.ParentChildDesignSolutionOneModule),
+        loadChildren: () => import('./solution-one/parent-child-design-solution-one.module').then(m => m.ParentChildDesignSolutionOneModule),
         outlet: 'solution-one'
       },
       { 
-        path: 'parent-child-design-solution-two',
-        loadChildren: () => import('./parent-child-design-solution-two/parent-child-design-solution-two.module').then(m => m.ParentChildDesignSolutionTwoModule),
+        path: 'solution-two',
+        loadChildren: () => import('./solution-two/solution-two.module').then(m => m.SolutionTwoModule),
         outlet: 'solution-two'
       },
       { 
         path: 'parent-child-design-solution-three',
-        loadChildren: () => import('./parent-child-design-solution-three/parent-child-design-solution-three.module').then(m => m.ParentChildDesignSolutionThreeModule),
+        loadChildren: () => import('./solution-three/parent-child-design-solution-three.module').then(m => m.ParentChildDesignSolutionThreeModule),
         outlet: 'solution-three'
       }
     ]
