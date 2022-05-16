@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       { 
         path: 'parent-child-design-solution-two',
-        loadChildren: () => import('./child-design-solution-two/child-design-solution-two.module').then(m => m.ChildDesignSolutionTwoModule),
+        loadChildren: () => import('./parent-child-design-solution-two/parent-child-design-solution-two.module').then(m => m.ParentChildDesignSolutionTwoModule),
         outlet: 'solution-two'
       },
       { 
@@ -30,4 +30,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ParentChildDesginRoutingModule { }
+export class ParentChildDesignRoutingModule { }
