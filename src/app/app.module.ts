@@ -11,6 +11,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HIGHLIGHT_OPTIONS, HighlightOptions } from 'ngx-highlightjs';
 import { DetailsComponent } from './shared/components/details/details.component';
+import { RouteReuseStrategy } from '@angular/router';
+import { AppReuseStrategy } from './app-reuse.strategy';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,10 @@ import { DetailsComponent } from './shared/components/details/details.component'
         },
         themePath: 'assets/css/highlight-themes/gradient-dark.css' // Optional, and useful if you want to change the theme dynamically
       }
+    },
+    {
+      provide: RouteReuseStrategy,
+      useClass: AppReuseStrategy
     }
   ],
   bootstrap: [AppComponent]
