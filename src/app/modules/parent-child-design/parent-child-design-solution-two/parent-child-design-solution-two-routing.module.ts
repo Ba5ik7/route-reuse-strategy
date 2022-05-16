@@ -7,10 +7,12 @@ const routes: Routes = [
   {
     path: '', 
     component: ParentChildDesignSolutionTwoComponent,
+    data: { alwaysRefresh: true },
     children: [
       {
           path: 'detail/:detailId',
-          component: DetailsComponent
+          component: DetailsComponent,
+          data: { alwaysRefresh: true }
       }
     ]
   }

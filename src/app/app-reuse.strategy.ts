@@ -8,9 +8,11 @@ export class AppReuseStrategy extends RouteReuseStrategy {
   shouldDetach(route: ActivatedRouteSnapshot): boolean { return false; }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    console.log('Im being called Yo');
-    
-    return false;
+    if (future.routeConfig === curr.routeConfig) {
+        return !future.data['alwaysRefresh'];
+    } else {
+        return false;
+    }
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle | null): void { }
