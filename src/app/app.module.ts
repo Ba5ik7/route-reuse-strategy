@@ -10,10 +10,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HIGHLIGHT_OPTIONS, HighlightOptions } from 'ngx-highlightjs';
+import { DetailsComponent } from './shared/components/details/details.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,

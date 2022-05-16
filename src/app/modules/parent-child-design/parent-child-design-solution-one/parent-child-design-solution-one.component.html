@@ -1,1 +1,8 @@
-<p>parent-child-design-solution-one works!</p>
+<h1>Parent Component</h1> 
+<ul class="nav nav-tabs"> 
+   <li class="nav-item" *ngFor="let random of randoms"> 
+      <a class="nav-link" [routerLink]="['detail', random]">Go to {{random}}</a> 
+   </li> 
+</ul> 
+
+<router-outlet></router-outlet>
