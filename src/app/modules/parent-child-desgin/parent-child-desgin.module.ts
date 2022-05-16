@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { ParentChildDesginRoutingModule } from './parent-child-desgin-routing.module';
 import { ParentChildDesginComponent } from './parent-child-desgin.component';
+import { HighlightCardModule } from 'src/app/shared/components/highlight-card/highlight-card.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -11,7 +14,10 @@ import { ParentChildDesginComponent } from './parent-child-desgin.component';
   ],
   imports: [
     CommonModule,
-    ParentChildDesginRoutingModule
+    ParentChildDesginRoutingModule,
+    HighlightCardModule,
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class ParentChildDesginModule { }

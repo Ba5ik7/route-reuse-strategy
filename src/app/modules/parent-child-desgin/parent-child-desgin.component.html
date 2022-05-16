@@ -1,1 +1,19 @@
-<p>parent-child-desgin works!</p>
+<div class="parent-child-page">
+  <section class="container">
+    <mat-card>
+      <h1>Parent-Child Design</h1>
+      <p>The first design is a parent-child relationship where the contents of the master page stay on screen when viewing the detail.  This is best used when the detail is small and can reasonably fit on the same page. This method places a router-outlet in the master page to display the child content:</p>
+      <highlight-card [code]="code"></highlight-card>
+      <p>And adds the detail as a child route for the detail in the application route configuration:</p>
+      <highlight-card [code]="code2"></highlight-card>
+    </mat-card>
+    <mat-card>
+      <h1>Live Example</h1>
+      <p>We can test and see how this setup meets our needs when navigating between detail pages:</p>
+    </mat-card>
+    <mat-card class="next-section-button" routerLink="/parent-child-design">
+      Next Section
+      <mat-icon>arrow_forward</mat-icon>
+    </mat-card>
+  </section>
+</div>
