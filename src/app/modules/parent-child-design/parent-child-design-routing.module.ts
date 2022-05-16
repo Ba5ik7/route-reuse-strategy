@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ParentChildDesginComponent } from './parent-child-design.component';
+import { ParentChildDesignComponent } from './parent-child-design.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ParentChildDesginComponent,
+    component: ParentChildDesignComponent,
     children: [
       { 
         path: 'parent-child-design-solution-one',

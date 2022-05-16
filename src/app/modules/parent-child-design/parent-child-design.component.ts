@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './parent-child-design.component.html',
   styleUrls: ['./parent-child-design.component.scss']
 })
-export class ParentChildDesginComponent implements OnInit {
+export class ParentChildDesignComponent implements OnInit {
   
   code: string = `@Component({
   selector: 'app-parent',
