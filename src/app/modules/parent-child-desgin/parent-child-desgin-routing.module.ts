@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ParentChildDesginComponent } from './parent-child-desgin.component';
-import { ParentChildDesignSolutionOneComponent } from './parent-child-design-solution-one/parent-child-design-solution-one.component';
 
 const routes: Routes = [
   {
@@ -10,13 +9,18 @@ const routes: Routes = [
     children: [
       { 
         path: 'parent-child-design-solution-one',
-        component: ParentChildDesignSolutionOneComponent,
+        loadChildren: () => import('./parent-child-design-solution-one/parent-child-design-solution-one.module').then(m => m.ParentChildDesignSolutionOneModule),
         outlet: 'solution-one'
       },
       { 
         path: 'parent-child-design-solution-two',
         loadChildren: () => import('./child-design-solution-two/child-design-solution-two.module').then(m => m.ChildDesignSolutionTwoModule),
         outlet: 'solution-two'
+      },
+      { 
+        path: 'parent-child-design-solution-three',
+        loadChildren: () => import('./parent-child-design-solution-three/parent-child-design-solution-three.module').then(m => m.ParentChildDesignSolutionThreeModule),
+        outlet: 'solution-three'
       }
     ]
   }
