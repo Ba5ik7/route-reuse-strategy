@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ParentChildDesginComponent } from './parent-child-desgin.component';
+import { ParentChildDesginComponent } from './parent-child-design.component';
 
 const routes: Routes = [
   {

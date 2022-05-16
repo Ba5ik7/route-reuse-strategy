@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-parent-child-desgin',
-  templateUrl: './parent-child-desgin.component.html',
-  styleUrls: ['./parent-child-desgin.component.scss']
+  templateUrl: './parent-child-design.component.html',
+  styleUrls: ['./parent-child-design.component.scss']
 })
 export class ParentChildDesginComponent implements OnInit {
   
