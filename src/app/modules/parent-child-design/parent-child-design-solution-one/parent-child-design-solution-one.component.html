@@ -1,8 +1,8 @@
-<h1>Parent Component</h1> 
-<ul class="nav nav-tabs"> 
-   <li class="nav-item" *ngFor="let random of randoms"> 
-      <a class="nav-link" [routerLink]="['detail', random]">Go to {{random}}</a> 
-   </li> 
-</ul> 
+<h2>Parent Component: {{displayName}}</h2> 
+<div class="nav"> 
+   <ng-container *ngFor="let random of randoms"> 
+      <div class="nav-item" [routerLink]="['detail', random]">Go to {{random}}</div> 
+   </ng-container> 
+</div>
 
 <router-outlet></router-outlet>

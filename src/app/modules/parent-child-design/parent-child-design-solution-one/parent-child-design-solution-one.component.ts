@@ -7,7 +7,7 @@ import { AbstractMasterComponent } from 'src/app/shared/abstractions/abstract-ma
   styleUrls: ['./parent-child-design-solution-one.component.scss']
 })
 export class ParentChildDesignSolutionOneComponent extends AbstractMasterComponent {
-  displayName: string = 'Solution One Parent';
+  displayName: string = 'Solution One';
 
   constructor() { super(); }
 

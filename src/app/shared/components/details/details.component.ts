@@ -13,12 +13,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-      this.route.params.subscribe(p => this.routeParam = p['detailId']);
-
-      this.randomVal = Math.floor(Math.random() * 100);
+    this.route.params.subscribe(p => this.routeParam = p['detailId']);
+    this.randomVal = Math.floor(Math.random() * 100);
+    console.log(`Init detail: ${this.routeParam}`);
   }
 
   ngOnDestroy(): void {
-      console.log(`Destroy detail: ${this.routeParam}`);
+    console.log(`Destroy detail: ${this.routeParam}`);
   }
 }

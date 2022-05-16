@@ -10,9 +10,28 @@
     <mat-card>
       <h1>Live Example</h1>
       <p>We can test and see how this setup meets our needs when navigating between detail pages:</p>
-      <a [routerLink]="['/parent-child-design', { outlets: { 'solution-one': ['parent-child-design-solution-one'] } }]">parent-child-design-solution-one</a>
-      <!-- <router-outlet></router-outlet> -->
+      <button
+        [routerLink]="['/parent-child-design', { outlets: { 'solution-one': ['parent-child-design-solution-one'] } }]"
+        mat-icon-button color="accent">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button
+        routerLink="/parent-child-design"
+        mat-icon-button color="accent">
+        <mat-icon>pause</mat-icon>
+      </button>
       <router-outlet name="solution-one"></router-outlet>
+      <p>It is also important to note that the console for the application is completely empty, but when navigating elsewhere we see the destroy message.</p>
+      <p>When comparing these results to our requirements, we see the following results:</p>
+      <ul>
+        <li>PASS – Master page is maintained</li>
+        <li>PASS – Detail view is a unique URL </li>
+        <li>FAIL – Detail view initialization does not run – the random value is the same every time even when routing between different details</li>
+        <li>PARTIAL – Detail component is never cleaned up between detail views, but it is after navigating away </li>
+      </ul>
+      <p>This approach initially results in one failure and one partial that we need to review.  Why does this fail to meet our requirement?</p>
+      <p>Look at the Angular DefaultRouteReuseStrategy class – specifically the shouldReuseRoute method.  The implementation returns true when the destination route has the same route configuration as the source route.  When going from one detail to the next this is always true – only the parameter changes and the same route configuration and components are used.  When the shouldReuseRoute method returns true, Angular will not destroy the component tree in turning firing the ngOnInit and ngOnDestroy hooks – instead the only thing that happens it the router emits new values for the route parameters and other Observables.  Therefore, we see the Detail ID update but not the random number.</p>
+      <p>We could easily solve the random number generation issue by moving the code into the subscribe callback on the params Observable.  This is often the best method in a detail type view to distinguish between code that creates the component and updates its contents when new data arrives or the route parameter changes.  Angular is designed around the idea of using Observables for communication and it shows here.  Most of the time, using the approach of binding to the param update instead of the overall life-cycle hooks will meet your application needs, but what happens when it doesn’t?  What if we really need the ngOnDestroy hook to fire when navigating away for that parameter and not just the component?</p>
     </mat-card>
     <mat-card>
       <h1>Live Example</h1>

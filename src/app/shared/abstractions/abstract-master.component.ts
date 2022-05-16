@@ -9,7 +9,7 @@ export abstract class AbstractMasterComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.randoms = [];
-		const numberOfLinks = this.getRandom(10);
+		const numberOfLinks = 5;
 		for (let i = 0; i < numberOfLinks; i++) {
 			this.randoms.push(this.getRandom(100));
 		}
