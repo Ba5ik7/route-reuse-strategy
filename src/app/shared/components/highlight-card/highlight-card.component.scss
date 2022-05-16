@@ -11,7 +11,7 @@ pre {
     font-size: 14px;
     min-height: 100%;
     padding: 1em 1.2em;
-
+    overflow-x: auto;
     &.hljs-line-numbers {
       padding: 0 !important;
     }
@@ -35,3 +35,6 @@ pre {
   cursor: pointer;
 }
 
+section {
+  margin-bottom: 10px;
+}

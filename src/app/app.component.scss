@@ -12,11 +12,27 @@ h1.app-name {
     margin-left: 8px;
 }
 
-.app-sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-    causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
+.app-header-toolbar {
+  // background-color: #29132e;
+  background-color: #141414;
+
+  // color: #FFF;
 }
+
+.app-sidenav-container {
+  flex: 1;
+  .app-sidenav {
+    // background-color: #212121;
+    mat-nav-list > a {
+      // color: #FFF;
+    }
+  }
+
+  .app-content {
+    // background-color: #f887ff;
+  }
+}
+
 
 mat-sidenav {
   width: 200px;

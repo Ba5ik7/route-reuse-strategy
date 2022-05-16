@@ -1,18 +1,19 @@
 <div class="app-container">
   <mat-toolbar color="primary" class="app-header-toolbar">
     <!-- <button mat-icon-button ><mat-icon>menu</mat-icon></button> -->
-    <h1 class="app-name">Route Reuse Strategy</h1>
+    <img src="assets/images/vanguard.svg" alt="Logo" >
+    <h1 class="app-name">Angular Workshop: <i>Route Reuse Strategy</i></h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="app-sidenav-container">
-    <mat-sidenav #sidenav [mode]="'side'" opened>
+    <mat-sidenav class="app-sidenav" #sidenav [mode]="'side'" opened>
       <mat-nav-list>
-        <a mat-list-item routerLink="home">Home</a>
+        <a mat-list-item routerLink="overview">Overview</a>
         <a mat-list-item routerLink="parent-child-design">Parent-Child Design</a>
         <a mat-list-item routerLink="search-detail">Search Detail</a>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content class="sidenav-content">
+    <mat-sidenav-content class="app-content">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
