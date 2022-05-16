@@ -43,7 +43,7 @@
     <mat-card>
       <h1>Live Example</h1>
       <p>We can test and see how this setup meets our needs when navigating between detail pages:</p>
-      <a [routerLink]="['/parent-child-design', { outlets: { 'solution-three': ['parent-child-design-solution-three'] } }]">parent-child-design-solution-two</a>
+      <a [routerLink]="['/parent-child-design', { outlets: { 'solution-three': ['solution-three'] } }]">parent-child-design-solution-two</a>
       <!-- <router-outlet></router-outlet> -->
       <router-outlet name="solution-three"></router-outlet>
     </mat-card>

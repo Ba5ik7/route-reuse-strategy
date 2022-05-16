@@ -18,8 +18,8 @@ const routes: Routes = [
         outlet: 'solution-two'
       },
       { 
-        path: 'parent-child-design-solution-three',
-        loadChildren: () => import('./solution-three/parent-child-design-solution-three.module').then(m => m.ParentChildDesignSolutionThreeModule),
+        path: 'solution-three',
+        loadChildren: () => import('./solution-three/solution-three.module').then(m => m.SolutionThreeModule),
         outlet: 'solution-three'
       }
     ]
