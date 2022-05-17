@@ -1,4 +1,119 @@
 <div class="page">
   <section class="container">
+    <mat-card>
+      <h1>Search Details Use Case</h1>
+      <p>The other design approach is to create two separate pages, a search results page and a detail view page. This situation becomes far more desirable than the Master- Detail as the detail page gets larger and adds functionality that doesn't easily fit on a single page. It is also very reasonable for a single site to employ both approaches - for example JIRA allows users to switch between both display options when reviewing search results.</p>
+      <p>To implement this approach, we create sibling routes instead of a parent-child relationship. These can be moved around to different parents depending on the desired URLs for the application, but we will put both under an empty parent to match the URL design of the Parent-Child approach:</p>
+      <highlight-card [code]="code"></highlight-card>
+      <p>And the updated route configuration:</p>
+      <highlight-card [code]="code2"></highlight-card>
+      <p>We can revert the custom RouteReuseStrategy and disable it to see how this approach works by default:</p>
+      <div class="solution-loading-toggles-group">
+        <button
+          [routerLink]="['/search-detail', { outlets: { 'solution-one': ['solution-one'] } }]"
+          mat-icon-button class="green">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button
+          [routerLink]="['/search-detail', { outlets: { 'solution-one': [] } }]"
+          mat-icon-button class="red">
+          <mat-icon>stop</mat-icon>
+        </button>
+      </div>
+      <router-outlet name="solution-one"></router-outlet>
+      <p>Let's review how this stacks up against our requirements:</p>
+      <ul>
+        <li>FAIL - The master page loses its context when we return to it </li>
+        <li>PASS - Detail view is a unique URL </li>
+        <li>PASS - Detail view initialization runs and gives a new random value </li>
+        <li>PASS - Detail component is cleaned up between detail views </li>
+      </ul>
+      <p>This approach gives an opposite problem as the Parent-Child design.  We initialize the detail view as expected, but we lose the context of the search results.
+      <p><b>NOTE:</b> The problem we had before with the initialization of the detail view still would exist if the detail view provided a direct link to another detail - this approach just doesn't show it with this testing because we are using the master page to navigate between details.</p>
+      <p>As we are navigating to a new page, we need some way to store the results of the search page somewhere in memory so we can retrieve it when returning to the page.  There are three commonly seen approaches to this:</p>
+      <ol>
+        <li>Using a service or other state management technique, but this approach often requires manually binding everything in the component into a service which gets tedious and error prone as the application grows.</li>
+        <li>Use the Parent-Child approach and hide or cover the parent page when a detail is visible (e.g. detail is a modal window or some other overlay).  This again can work for simple implementations but has drawbacks for side effects and requires tightly coupling the components. If trying to use a full screen overlay this can also have adverse effects on usability if the user uses the back button to try to go back to the parent.</li>
+        <li>RouteReuseStrategy to the rescue!</li>
+      </ol>
+    </mat-card>
+    <mat-card>
+      <h1>Using The Route Reuse Strategy</h1>
+      <p>To see how we can use RouteResuseStrategy we need to examine the process of routing and how the methods are used:</p>
+      <ol>
+        <li><b>shouldDetach</b> - This determines if the route the user is leaving should save the component state.  </li>
+        <li><b>store</b> - This stores the detached route if the method above returns true.</li>
+        <li><b>shouldAttach</b> - This determines if the route the user is navigating to should load the component state.</li>
+        <li><b>retrieve</b> - This loads the detached route if the method above returns true.</li>
+      </ol>
+      <p>With these methods, we would expect the following for our custom implementation:</p>
+      <ul>
+        <li>shouldDetach returns true for the search results page and false for all other routes </li>
+        <li>shouldAttach returns true when we have a saved search result </li>
+        <li>we need a way to clear a saved search for when the user conducts a new search </li>
+      </ul>
+      <p>Let's start with a similar approach we took before by adding a flag to the route configuration.  This could also be done through identifying the URL or any other identification technique:</p>
+      <highlight-card [code]="code3"></highlight-card>
+      <p>This gives a straightforward approach to the shouldDetach method:</p>
+      <highlight-card [code]="code4"></highlight-card>
+      <p>And to store the component we need an internal map to use for storage, we can add this as a private property to the custom RouteReuseStrategy class:</p>
+      <highlight-card [code]="code5"></highlight-card>
+      <p>And now to store the component under a unique key (this is important to prevent conflict between multiple saved routes if this strategy is used for multiple routes):</p>
+      <highlight-card [code]="code6"></highlight-card>
+      <p>That completes the setup for saving the component when leaving, now to check if we should load a saved component when navigating to a route we can check if we have anything saved for the provided route and return the value as needed:</p>
+      <highlight-card [code]="code7"></highlight-card>
+      <p>Now we can test with this implementation of RouteReuseStrategy:</p>
+      <div class="solution-loading-toggles-group">
+        <button
+          [routerLink]="['/search-detail', { outlets: { 'solution-two': ['solution-two'] } }]"
+          mat-icon-button class="green">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button
+          [routerLink]="['/search-detail', { outlets: { 'solution-two': [] } }]"
+          mat-icon-button class="red">
+          <mat-icon>stop</mat-icon>
+        </button>
+      </div>
+      <router-outlet name="solution-two"></router-outlet>
+      <p>Success!  We are maintaining the search result component state across navigation and creating a new detail component for each detail we view.</p>
+    </mat-card>
+    <mat-card>
+      <h1>One more thing!</h1>
+      <p>There is one remaining item to address, what happens when we want to conduct a new search?  Even if the contents of the search result page are populated via an Observable, we may still want the ngOnInit hook to fire to reset the sorting, filters, pagination, etc.  We need a way to clear the saved component on demand.</p>
+      <p>Let's create a method to do so in the custom RouteReuseStrategy class:</p>
+      <highlight-card [code]="code8"></highlight-card>
+      <p>We need a way to access this method however. Think back, what is the key to implementing a custom RouteReuseStrategy in the first place? We implemented a provider - we can use that! This would likely happen in a service and be executed whenever the user conducts a new search, but for simplicity lets add a button on the detail page:</p>
+      <highlight-card [code]="code9"></highlight-card>
+      <p>And bind it in the component:</p>
+      <highlight-card [code]="code10"></highlight-card>
+      <p>Note we need to cast the injected object to our custom class - the injection token is for the abstract class so that's all that Typescript gives us.  Also note that we need to provide the URL key that was generated in our class implementation as the saved handle key.  Keep this in mind when determining an implementation for triggering a save of a route.  This example mixed a URL route and route config data, but generally a single approach is preferred for simplicity and maintenance.</p>
+      <p>A word of caution: do not use the Component type as a key!  This seems to be a perfect approach as it provides a unique key, can be made independent of URL changes, etc. however it may work in a development environment and fail in production when minification is applied.</p>
+      <p>Let's see this in action - first a test to make sure it still works as before then clearing the search:</p>
+      <div class="solution-loading-toggles-group">
+        <button
+          [routerLink]="['/search-detail', { outlets: { 'solution-three': ['solution-three'] } }]"
+          mat-icon-button class="green">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button
+          [routerLink]="['/search-detail', { outlets: { 'solution-three': [] } }]"
+          mat-icon-button class="red">
+          <mat-icon>stop</mat-icon>
+        </button>
+      </div>
+      <router-outlet name="solution-three"></router-outlet>
+      <p>There we have it - a new search result any time the Clear Search button is clicked.</p>
+      <span class="divider"></span>
+      <span class="mat-display-1">There is one very subtle problem left.</span>
+      <p> We have a new search component - but the old one never got destroyed! This would result in memory leaks and other potential unintended consequences.  When Angular detaches a component, it pulls it out of its responsibility and hands it over to our RouteReuseStrategy implementation.  When we cleared the saved handle, we just removed the object from our tracking map, but that never triggers the lifecycle hooks we would expect.</p>
+      <p>Let’s add some logic to address this in our custom RouteReuseStrategy:</p>
+      <highlight-card [code]="code11"></highlight-card>
+      <p>We have access to the component instance itself from the saved handle so all we need to do is call destroy to trigger the destruction life-cycle of the component.</p>
+    </mat-card>
+    <mat-card>
+      <h1>Conclusion</h1>
+      <p>The most appropriate summary of the RouteReuseStrategy is this: with great power comes great responsibility. It is an extremely powerful tool to customize Angular and greatly improve the user experience of your application – however there are various pitfalls to consider to safely implement its usage in a way that prevents some mysterious and difficult to identify bugs. There is one other downside - the functionality is not obvious to other developers as the majority of the functionality happens in the internals of Angular. Comments and documentation are crtitical for this approach to support fellow developers that are tasked with future maintenance. Even with the caveat, it remains a very power addition to the Angular toolbelt to quickly solve some common challenges.</p>
+    </mat-card>
   </section>
 </div>
