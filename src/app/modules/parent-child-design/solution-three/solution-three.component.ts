@@ -3,8 +3,7 @@ import { AbstractMasterComponent } from 'src/app/shared/abstractions/abstract-ma
 
 @Component({
   selector: 'parent-child-design-solution-three',
-  templateUrl: './solution-three.component.html',
-  styleUrls: ['./solution-three.component.scss']
+  templateUrl: './solution-three.component.html'
 })
 export class SolutionThreeComponent extends AbstractMasterComponent {
   displayName: string = 'Solution Three';

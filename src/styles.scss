@@ -25,6 +25,29 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  h1.app-name {
+      margin-left: 8px;
+  }
+  .app-header-toolbar {
+    background-color: #141414;
+  }
+  .app-sidenav {
+    width: 200px;
+  }
+  .app-sidenav-container {
+    flex: 1;
+  }
+}
+
+
 .page {
   margin: 20px 0;
   .container {
@@ -35,6 +58,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin: 0 20px;
     mat-card {
       max-width: 800px;
+    }
+  }
+}
+
+.solution-parent {
+  display: block;
+  border: 1px solid red;
+  padding: 10px;
+  margin-bottom: 10px;
+  .nav {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
+    .nav-item {
+      background-color: #000;
+      color: #FFF;
+      padding: 5px 10px;
+      cursor: pointer;
     }
   }
 }
@@ -56,32 +98,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-bottom: 10px;
 }
 
-.green {
-  color: #17fc95;
-}
+.green { color: #17fc95; }
 
-.red {
-  color: red;
-}
-
-.solution-parent {
-  display: block;
-  border: 1px solid red;
-  padding: 10px;
-  margin-bottom: 10px;
-  .nav {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    margin-bottom: 10px;
-    .nav-item {
-      background-color: #000;
-      color: #FFF;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-  }
-}
+.red { color: red; }
 
 .divider {
   display: block;

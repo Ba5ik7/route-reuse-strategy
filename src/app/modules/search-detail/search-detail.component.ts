@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-search-detail',
-  templateUrl: './search-detail.component.html',
-  styleUrls: ['./search-detail.component.scss']
+  templateUrl: './search-detail.component.html'
 })
-export class SearchDetailComponent implements OnInit {
+export class SearchDetailComponent {
 
   code: string = `@Component({
   selector: 'app-search',
@@ -97,10 +96,5 @@ clearStoredRoute(): void {
 
   this.savedHandles.delete(key);
 }`;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

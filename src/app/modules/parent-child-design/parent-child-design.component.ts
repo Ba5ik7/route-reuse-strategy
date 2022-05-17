@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-parent-child-desgin',
-  templateUrl: './parent-child-design.component.html',
-  styleUrls: ['./parent-child-design.component.scss']
+  templateUrl: './parent-child-design.component.html'
 })
-export class ParentChildDesignComponent implements OnInit {
+export class ParentChildDesignComponent {
   
   code: string = `@Component({
   selector: 'app-parent',
@@ -53,10 +52,5 @@ export class ParentComponent extends MasterComponent {
     return false;
   }
 }`;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
