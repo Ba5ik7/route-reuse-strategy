@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AbstractMasterComponent } from 'src/app/shared/abstractions/abstract-master.component';
 
 @Component({
   selector: 'parent-child-design-solution-three',
   templateUrl: './solution-three.component.html',
   styleUrls: ['./solution-three.component.scss']
 })
-export class SolutionThreeComponent implements OnInit {
+export class SolutionThreeComponent extends AbstractMasterComponent {
+  displayName: string = 'Solution Three';
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor() { super(); }
 
 }
+

@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 
+interface RamdomObject {
+	number: number,
+	appName: string
+}
+
 @Component({
   template:''
 })

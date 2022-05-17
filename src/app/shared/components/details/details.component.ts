@@ -7,18 +7,22 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  public routeParam!: any;
+  public routeId!: any;
+  public appName!: any;
   public randomVal!: number;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(p => this.routeParam = p['detailId']);
+    this.route.params.subscribe(p => {
+      this.routeId = p['detailId'];
+      this.appName = p['appName'];
+    });
     this.randomVal = Math.floor(Math.random() * 100);
-    console.log(`Init detail: ${this.routeParam}`);
+    console.log(`Init detail: ${this.routeId}`);
   }
 
   ngOnDestroy(): void {
-    console.log(`Destroy detail: ${this.routeParam}`);
+    console.log(`Destroy detail: ${this.routeId}`);
   }
 }

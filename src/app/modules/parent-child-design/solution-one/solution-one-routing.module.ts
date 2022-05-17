@@ -9,8 +9,8 @@ const routes: Routes = [
     component: SolutionOneComponent,
     children: [
       {
-          path: 'detail/:detailId',
-          component: DetailsComponent
+        path: 'detail/:appName/:detailId',
+        component: DetailsComponent
       }
     ]
   }

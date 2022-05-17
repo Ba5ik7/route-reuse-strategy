@@ -10,9 +10,9 @@ const routes: Routes = [
     data: { alwaysRefresh: true },
     children: [
       {
-          path: 'detail/:detailId',
-          component: DetailsComponent,
-          data: { alwaysRefresh: true }
+        path: 'detail/:appName/:detailId',
+        component: DetailsComponent,
+        data: { alwaysRefresh: true }
       }
     ]
   }

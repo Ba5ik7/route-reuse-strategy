@@ -13,13 +13,13 @@
       <div class="solution-loading-toggles-group">
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-one': ['solution-one'] } }]"
-          mat-icon-button color="accent">
+          mat-icon-button class="green">
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
-          routerLink="/parent-child-design"
-          mat-icon-button color="accent">
-          <mat-icon>pause</mat-icon>
+          [routerLink]="['/parent-child-design', { outlets: { 'solution-one': [] } }]"
+          mat-icon-button class="red">
+          <mat-icon>stop</mat-icon>
         </button>
       </div>
       <router-outlet name="solution-one"></router-outlet>
@@ -44,13 +44,13 @@
       <div class="solution-loading-toggles-group">
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-two': ['solution-two'] } }]"
-          mat-icon-button color="accent">
+          mat-icon-button class="green">
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
-          routerLink="/parent-child-design"
-          mat-icon-button color="accent">
-          <mat-icon>pause</mat-icon>
+          [routerLink]="['/parent-child-design', { outlets: { 'solution-two': [] } }]"
+          mat-icon-button class="red">
+          <mat-icon>stop</mat-icon>
         </button>
       </div>
       <router-outlet name="solution-two"></router-outlet>
@@ -66,20 +66,20 @@
       <div class="solution-loading-toggles-group">
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-three': ['solution-three'] } }]"
-          mat-icon-button color="accent">
+          mat-icon-button class="green">
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
-          routerLink="/parent-child-design"
-          mat-icon-button color="accent">
-          <mat-icon>pause</mat-icon>
+          [routerLink]="['/parent-child-design', { outlets: { 'solution-three': [] } }]"
+          mat-icon-button class="red">
+          <mat-icon>stop</mat-icon>
         </button>
       </div>
       <router-outlet name="solution-three"></router-outlet>
       <p>Excellent! We now are only rebuilding the detail component and we leave the parent component untouched. We have a design that meets all our requirements – just be aware of the consequences if the detail view is to have any children added to it.</p>
     </mat-card>
-    <mat-card class="next-section-button" routerLink="/parent-child-design">
-      Next Section
+    <mat-card class="next-section-button" routerLink="/search-detail">
+      Next Section: Search Detail Scenario
       <mat-icon>arrow_forward</mat-icon>
     </mat-card>
   </section>
