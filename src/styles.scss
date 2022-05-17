@@ -63,3 +63,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .red {
   color: red;
 }
+
+.solution-parent {
+  display: block;
+  border: 1px solid red;
+  padding: 10px;
+  margin-bottom: 10px;
+  .nav {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
+    .nav-item {
+      background-color: #000;
+      color: #FFF;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+}
