@@ -34,6 +34,26 @@ export class ParentComponent extends MasterComponent {
   ]
 }`;
 
+  code3: string = `shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+  return false;
+}`;
+
+  code4: string = `{
+  path: 'detail/:detailId',
+  component: DetailComponent,
+  data: {
+    alwaysRefresh: true
+  }
+ }`;
+
+ code5: string = `shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+  if (future.routeConfig === curr.routeConfig) {
+    return !future.data.alwaysRefresh;
+  } else {
+    return false;
+  }
+}`;
+
   constructor() { }
 
   ngOnInit(): void {
