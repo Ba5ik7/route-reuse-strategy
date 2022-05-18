@@ -10,15 +10,15 @@ export class ParentChildDesignComponent {
   selector: 'app-parent',
   template: \` 
     <h1>Parent Component</h1> 
-    <ul class="nav nav-tabs"> 
-        <li class="nav-item" *ngFor="let random of randoms"> 
-          <a class="nav-link" [routerLink]="['detail', random]" routerLinkActive="active">Go to {{random}}</a> 
+    <ul> 
+        <li *ngFor="let random of randoms"> 
+          <a [routerLink]="['detail', displayName, random]">Go to {{random}}</a> 
         </li> 
     </ul> 
 
     <router-outlet></router-outlet>\`
 })
-export class ParentComponent extends MasterComponent {
+export class ParentComponent extends ParentBaseComponent {
   displayName = 'ParentComponent';
 }`;
 
@@ -27,25 +27,29 @@ export class ParentComponent extends MasterComponent {
   component: ParentComponent,
   children: [
     {
-      path: 'detail/:detailId',
+      path: 'detail/:displayName/:detailId',
       component: DetailComponent
     }
   ]
 }`;
 
   code3: string = `shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+  return future.routeConfig === curr.routeConfig;
+}`;
+
+  code4: string = `shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
   return false;
 }`;
 
-  code4: string = `{
-  path: 'detail/:detailId',
+  code5: string = `{
+  path: 'detail/:displayName/:detailId',
   component: DetailComponent,
   data: {
     alwaysRefresh: true
   }
  }`;
 
- code5: string = `shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+ code6: string = `shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
   if (future.routeConfig === curr.routeConfig) {
     return !future.data.alwaysRefresh;
   } else {

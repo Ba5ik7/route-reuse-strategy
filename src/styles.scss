@@ -74,13 +74,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
     .solution-loading-toggles-group {
       margin-bottom: 10px;
+      button {
+        margin-right: 10px;
+      }
     }
   }
 }
 
 .solution-parent {
   display: block;
-  border: 1px solid red;
+  border: 1px solid #066E98;
   padding: 10px;
   margin-bottom: 10px;
   .nav {
@@ -108,4 +111,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-top-style: solid;
   border-top-color: #ffffff1f;
   margin: 20px 0;
+}
+
+ul.check-list {
+  list-style-type: none;
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    mat-icon {
+      margin-right: 10px;
+    }
+  }
 }

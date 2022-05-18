@@ -34,7 +34,7 @@ export class OverviewComponent {
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
 ]})`;
 
-  code4: string = `export abstract class ExampleParentBaseComponent implements OnInit, OnDestroy {
+  code4: string = `export abstract class ParentBaseComponent implements OnInit, OnDestroy {
   public list: number[];
   public abstract displayName: string;
 
@@ -60,7 +60,7 @@ export class OverviewComponent {
       <div><b>Random value:</b> {{randomVal}}</div>
 \`
 })
-export class ExampleDetailComponent implements OnInit, OnDestroy {
+export class DetailComponent implements OnInit, OnDestroy {
   public routeId!: any;
   public displayName!: any;
   public randomVal!: number;

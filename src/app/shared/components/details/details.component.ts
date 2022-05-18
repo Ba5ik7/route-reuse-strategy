@@ -19,10 +19,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.displayName = p['displayName'];
     });
     this.randomVal = Math.floor(Math.random() * 100);
-    console.log(`Init detail: ${this.routeId}`);
+    console.log(`OnInit ${this.displayName} Detail: ${this.routeId}`);
   }
 
   ngOnDestroy(): void {
-    console.log(`Destroy ${this.displayName} Detail: ${this.routeId}`);
+    console.log(`OnDestroy ${this.displayName} Detail: ${this.routeId}`);
   }
 }

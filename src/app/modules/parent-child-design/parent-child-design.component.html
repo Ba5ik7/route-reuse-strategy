@@ -1,82 +1,114 @@
 <div class="page">
   <section class="container">
     <mat-card>
-      <h1>Parent-Child Design</h1>
-      <p>The first design is a parent-child relationship where the contents of the master page stay on screen when viewing the detail.  This is best used when the detail is small and can reasonably fit on the same page. This method places a router-outlet in the master page to display the child content:</p>
+      <h1>Parent-Child Design Pattern</h1>
+      <p>Our first design pattern is a parent-child relationship. This where the contents of the parent’s component stay on screen while viewing the detail’s component. Best used when the detail is small and can reasonably fit on the same page.</p>
+      <p>This method places a router-outlet in the parent component to display the child content:</p>
       <highlight-card [code]="code"></highlight-card>
-      <p>And adds the detail as a child route for the detail in the application route configuration:</p>
+      <p>As you can see, we are doing several things here:</p>
+      <ul>
+        <li>Extending the ParentBaseComponent</li>
+        <li>Looping over the random numbers list to create router links</li>
+        <li>The router links are made up of the route and passing the display name and detail id</li>
+        <li>Defining the display name</li>
+        <li>Adding the router outlet where the detail component will be render</li>
+      </ul>
+      <p>Now, let’s add the detail component as a child route for the parent component's route. Lastly, add the display name and detail id route parameters in the application route configuration:</p>
       <highlight-card [code]="code2"></highlight-card>
     </mat-card>
     <mat-card>
       <h1>First Implementation</h1>
-      <p>We can test and see how this setup meets our needs when navigating between detail pages:</p>
+      <p>Finally! Let’s test and see how this setup meets our needs when navigating between detail pages:</p>
       <div class="solution-loading-toggles-group">
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-one': ['solution-one'] } }]"
-          mat-icon-button class="green">
+          mat-raised-button color="primary">
+          Play
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-one': [] } }]"
-          mat-icon-button class="red">
+          mat-button color="accent">
+          Stop
           <mat-icon>stop</mat-icon>
         </button>
       </div>
       <router-outlet name="solution-one"></router-outlet>
-      <p>It is also important to note that the console for the application is completely empty, but when navigating elsewhere we see the destroy message.</p>
+      <p>Viewing the console logs, we can see the parent and detail page did trigger the OnInit hook. However, switching through the detail pages don’t see any more OnInit or OnDestroy hooks being called. So, our random value never changes.</p>
+      <p><i>One thing to note, once you click the stop button it will destroy the loaded module triggering the OnDestroy hooks. This is only because of how the demo is setup and doesn’t help us in a real-life scenario.</i></p>
       <p>When comparing these results to our requirements, we see the following results:</p>
-      <ul>
-        <li>PASS – Master page is maintained</li>
-        <li>PASS – Detail view is a unique URL </li>
-        <li>FAIL – Detail view initialization does not run – the random value is the same every time even when routing between different details</li>
-        <li>PARTIAL – Detail component is never cleaned up between detail views, but it is after navigating away </li>
+      <ul class="check-list">
+        <li><mat-icon class="green">check</mat-icon> Master state is maintained</li>
+        <li><mat-icon class="green">check</mat-icon> Detail view is a unique URL </li>
+        <li><mat-icon class="red">close</mat-icon> Detail view initialization does not run</li>
+        <li><mat-icon class="red">close</mat-icon> Detail component is never cleaned up between detail views</li>
       </ul>
-      <p>This approach initially results in one failure and one partial that we need to review.  Why does this fail to meet our requirement?</p>
-      <p>Look at the Angular DefaultRouteReuseStrategy class – specifically the shouldReuseRoute method.  The implementation returns true when the destination route has the same route configuration as the source route.  When going from one detail to the next this is always true – only the parameter changes and the same route configuration and components are used.  When the shouldReuseRoute method returns true, Angular will not destroy the component tree in turning firing the ngOnInit and ngOnDestroy hooks – instead the only thing that happens it the router emits new values for the route parameters and other Observables.  Therefore, we see the Detail ID update but not the random number.</p>
-      <p>We could easily solve the random number generation issue by moving the code into the subscribe callback on the params Observable.  This is often the best method in a detail type view to distinguish between code that creates the component and updates its contents when new data arrives or the route parameter changes.  Angular is designed around the idea of using Observables for communication and it shows here.  Most of the time, using the approach of binding to the param update instead of the overall life-cycle hooks will meet your application needs, but what happens when it doesn’t?  What if we really need the ngOnDestroy hook to fire when navigating away for that parameter and not just the component?</p>
+      <p>Why is failing to meet our requirements?</p>
+      <p>Let’s look at the Angular default RouteReuseStrategy method shouldReuseRoute:</p>
+      <highlight-card [code]="code3"></highlight-card>
+      <p>This implementation returns true when the destination route has the same route configuration as the source route. When going from one detail to the another this will always be true. Only the parameter changes so the same route configuration and components are used. When the shouldReuseRoute method returns true, Angular will not destroy the component tree thus not firing the OnInit and OnDestroy hooks. Instead, the only thing that happens it the router emits new values for the route parameters observable. Therefore, we see the Detail ID update but not the random number.</p>
+      <p>Like I said before there is more than one way to crack an egg. We could easily solve the random number generation issue by moving the code into the subscribe callback on the params Observable. This is often the best method in a detail type view. Angular is designed around the idea of using Observables for communication and it shows here. Most of the time, using the approach of binding to the param update instead of the overall life-cycle hooks will meet your application needs, but what happens when it doesn’t? What if we really need the OnDestroy hook to fire when navigating away from that parameter and not just the component?</p>
     </mat-card>
     <mat-card>
       <h1>Second Implementation</h1>
       <p>Returning to the RouteReuseStrategy – we can provide a custom implementation of the shouldReuseRoute method. We can set up a custom class implementation as discussed earlier copying the functionality of the default Angular implementation.</p>
       <p>The only change we will make now is to not reuse any routes:</p>
-      <highlight-card [code]="code3"></highlight-card>
+      <highlight-card [code]="code4"></highlight-card>
       <p>With only this change let’s test again and see what happens when we select a detail this time:</p>
       <div class="solution-loading-toggles-group">
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-two': ['solution-two'] } }]"
-          mat-icon-button class="green">
+          mat-raised-button color="primary">
+          Play
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-two': [] } }]"
-          mat-icon-button class="red">
+          mat-button color="accent">
+          Stop
           <mat-icon>stop</mat-icon>
         </button>
       </div>
       <router-outlet name="solution-two"></router-outlet>
-      <p>The ngOnDestroy hook runs all right, but we’ve made this far worse. The ngOnDestroy hook ran for the ParentComponent as well and we lost the state of the parent, we have new random links so a fresh search to the back-end has been called and the user loses all interaction. We can now see why Angular has the default functionality we saw earlier. When a routing event happens, it doesn’t just happen at the detail level. Angular needs to review the entire component tree generated by the route. When routing between siblings, the default functionality keeps the parent components intact and only rebuilds what is necessary – which not only gives a mostly expected behavior but has large performance benefits as well.</p>
+      <p>The ngOnDestroy hook runs all right, but we’ve made this far worse.</p>
+      <ul class="check-list">
+        <li><mat-icon class="red">close</mat-icon> Master state is NOT maintained</li>
+        <li><mat-icon class="green">check</mat-icon> Detail view is a unique URL </li>
+        <li><mat-icon class="green">check</mat-icon> Detail view initialization does not run</li>
+        <li><mat-icon class="green">check</mat-icon> Detail component is destroyed</li>
+      </ul>
+      <p>The OnDestroy hook ran for the ParentComponent as well and we lost the state of the parent, we have new random links so a fresh search to the back-end has been called and the user loses all interaction. We can now see why Angular has the default functionality we saw earlier. When a routing event happens, it doesn’t just happen at the detail level. Angular needs to review the entire component tree generated by the route. When routing between siblings, the default functionality keeps the parent components intact and only rebuilds what is necessary. Which not only gives a mostly expected behavior but has large performance benefits as well.</p>
     </mat-card>
     <mat-card>
       <h1>Third Implementation</h1>
-      <p>What we need is a way to direct Angular to only rebuild certain components but reuse others by default. We want to add the default functionality back in to shouldReuseRoute and only deviate when we specifically request it. We can accomplish this by using the data property on the route configuration which is designed exactly for this type of extensibility to a route. Let’s add a flag to the detail route definition:</p>
-      <highlight-card [code]="code4"></highlight-card>
-      <p>And check for this in shouldReuseRoute:</p>
-      <highlight-card [code]="code4"></highlight-card>
+      <p>What we need is a way to articulate to Angular to only rebuild certain components and reuse others by default. We want to add the default functionality back in to shouldReuseRoute and only deviate when we specifically request it.</p>
+      <p>We can accomplish this by using the data property on the route configuration which is designed exactly for this type of extensibility to a route. Let’s add a flag to the detail route definition:</p>
+      <highlight-card [code]="code5"></highlight-card>
+      <p>Now simply check for the flag inside the shouldReuseRoute method:</p>
+      <highlight-card [code]="code6"></highlight-card>
       <p>Now to test again:</p>
       <div class="solution-loading-toggles-group">
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-three': ['solution-three'] } }]"
-          mat-icon-button class="green">
+          mat-raised-button color="primary">
+          Play
           <mat-icon>play_arrow</mat-icon>
         </button>
         <button
           [routerLink]="['/parent-child-design', { outlets: { 'solution-three': [] } }]"
-          mat-icon-button class="red">
+          mat-button color="accent">
+          Stop
           <mat-icon>stop</mat-icon>
         </button>
       </div>
       <router-outlet name="solution-three"></router-outlet>
-      <p>Excellent! We now are only rebuilding the detail component and we leave the parent component untouched. We have a design that meets all our requirements – just be aware of the consequences if the detail view is to have any children added to it.</p>
+      <ul class="check-list">
+        <li><mat-icon class="green">check</mat-icon> Master state is maintained</li>
+        <li><mat-icon class="green">check</mat-icon> Detail view is a unique URL </li>
+        <li><mat-icon class="green">check</mat-icon> Detail view initialization does not run</li>
+        <li><mat-icon class="green">check</mat-icon> Detail component is destroyed</li>
+      </ul>
+      <p>Fantastic! We are only rebuilding the detail component and we leave the parent component untouched. This design meets all our requirements. Just be aware of the consequences if the detail view will have any children added to it.</p>
     </mat-card>
     <mat-card class="next-section-button" routerLink="/search-detail">
       Next Section: Search Detail Scenario
