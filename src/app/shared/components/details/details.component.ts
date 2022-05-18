@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   public routeId!: any;
-  public appName!: any;
+  public displayName!: any;
   public randomVal!: number;
 
   constructor(private route: ActivatedRoute) { }
@@ -16,13 +16,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(p => {
       this.routeId = p['detailId'];
-      this.appName = p['appName'];
+      this.displayName = p['displayName'];
     });
     this.randomVal = Math.floor(Math.random() * 100);
     console.log(`Init detail: ${this.routeId}`);
   }
 
   ngOnDestroy(): void {
-    console.log(`Destroy detail: ${this.routeId}`);
+    console.log(`Destroy ${this.displayName} Detail: ${this.routeId}`);
   }
 }

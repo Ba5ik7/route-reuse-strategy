@@ -10,7 +10,7 @@ const routes: Routes = [
     data: { alwaysRefresh: true },
     children: [
       {
-        path: 'detail/:appName/:detailId',
+        path: 'detail/:displayName/:detailId',
         component: DetailsComponent,
         data: { alwaysRefresh: true }
       }

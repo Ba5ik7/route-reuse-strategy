@@ -2,52 +2,55 @@
   <section class="container">
     <mat-card>
       <h1>Overview</h1>
-      <p>Angular provides a powerful built in router to emulate traditional web page navigation and display new components when accessing various URLs within the application.  However, there are times that the default functionality can get in the way or cause unexpected results in the application.  There are various ways to work around some of this functionality, but wouldn’t it be great if we could have some control over the router to make some simple decisions that can greatly improve the functionality of our application without overhead?  Let’s look at the RouteReuseStrategy class and find out!</p>
+      <p>Angular, out of the box, provides a formidable router that emulates the antiquated web page navigation experience. Which simple display's new components when accessing various URLs within the application. However, there are situations that the default functionality of the built-in router can fall short of meeting our business requirements. Like cracking an egg, there are numerous ways to work around some of this functionality. In this workshop we are going to look at the RouteReuseStrategy and how to use it to manipulate the default functionality of the Angular router. This workshop has two scenarios we will cover.</p>
     </mat-card>
     <mat-card>
       <h1>RouteReuseStrategy</h1>
-      <p>Angular provides an abstract class called RouteReuseStrategy that controls how and when components are created, saved, and destroyed during routing.  By default, Angular uses the DefaultRouteReuseStrategy class below:</p>
+      <p>There is an abstract class RouteReuseStrategy within Angular that dictates how and when components are created, saved, and destroyed during routing lifecycle. Angular by default uses the RouteReuseStrategy.</p>
+      <p>Let's look at the default behaviors of the class below:</p>
       <highlight-card [code]="code"></highlight-card>
-      <p>As you can see, by default Angular does not use much of this functionality.  The only method that has any functionality is the shouldReuseRoute, everything else is null or false.  This article will discuss the ways these methods can be utilized together to enhance the functionality of the Angular router.</p>
+      <p>Directly from Angular documents:</p>
+      <p><i>This base route reuse strategy only reuses routes when the matched router configs are identical. This prevents components from being destroyed and recreated when just the fragment or query parameters change (that is, the existing component is reused).</i></p>
+      <p>Basically, component lifecycles will NOT be triggered if the component is being reused on query routes. We will talk about these methods and how we can use them to enhance the Angular router to meet our edge cases.</p>
     </mat-card>
     <mat-card>
       <h1>Custom Implementation</h1>
-      <p>In order to use a custom implementation of the RouteReuseStrategy, you need to complete two steps:</p>
-      <p>1. Create a class extending the RouteReuseStrategy – a sample minimal implemenation is below that uses the default Angular functionality as a starting point:</p>
+      <p>To add a custom implementation of the RouteReuseStrategy, you need to complete this two steps process:</p>
+      <p>1. Create a class that extends the RouteReuseStrategy and then implement the needed methods in order to extend the abstract class:</p>
       <highlight-card [code]="code2"></highlight-card>
-      <p>2. Create a provider to inject your custom class in your application’s main module:</p>
+      <p><i>Note: The methods' logic we added is the same as the default Angular logic.</i></p>
+      <p>2. Create a provider to inject your custom class in your application's main module:</p>
       <highlight-card [code]="code3"></highlight-card>
+      <p><i>Important to note that when adding a route strategy as a provider, you must ONLY do so in the top-level component's module.</i></p>
     </mat-card>
     <mat-card>
       <h1>Example Situation</h1>
-      <p>A common situation in web applications is a parent-detail relationship.  There is some parent page (e.g. search results) which the user can select individual details to view.  In this pattern, we are going to set a few constraints for how we want the application to perform:</p>
+      <p>A common situation in web applications is a parent-detail relationship. Where some “parent” page (e.g. search results) is displaying a list of items which the user can click to view the details. Using this pattern, we are going to set a few limitations on how we want the application to perform:</p>
       <ul>
-        <li>The parent page should have some interactivity state that should be maintained between detail views such as sorting, filtering, etc. – we will represent this by a random number displayed in the component where if we maintain the same random number we can demonstrate a preservation of the state of the component</li>
-        <li>The detail is viewable via a distinct URL containing an ID for the detail record</li>
-        <li>The detail view should load the details upon routing and be able to run some initialization for the detail.</li>
-        <li>Components need to run cleanup code when destroyed such as unsubscribing from observables – we will represent this by logging a message to the console.</li>
+        <li>The parent page should have some state that should be preserved between viewing details (such as sorting, filtering, etc.)</li>
+        <li>The detail is viewable via a distinct URL containing an ID for the detail record.</li>
+        <li>The detail view should load the detail's content and be able to run some initialization logic.</li>
+        <li>The components will need to run cleanup code when destroyed such as unsubscribing from observables.</li>
       </ul>
-      <p>We can implement two commonly used designs to meet the requirements.  As we will see, each can have some drawbacks and areas that we can gain additional control using the RouteReuseStrategy.  Both approaches will use the same detail page and a similar base class for the parent page.</p>
+      <p>We will implement two common design patterns used in Angular development. Each will have drawbacks. In those areas, we will use our custom RouteReuseStrategy to fill in those gaps.</p>
     </mat-card>
     <mat-card>
-      <h1 class="display-4">Shared Components</h1>
-      <p>This example will share as much as possible between the implementations to help distill the different approaches to only the differences.</p>
-      <h3>Parent</h3>
-      <p>The first shared functionality is a base abstract class to be used by the master page.</p>
+      <h1>Shared Components</h1>
+      <p>Both approaches will use the same detail component and will extent a base class for the parent pages. These examples will share as much logic as possible between the scenarios to help focus on the different approaches rather than the component's logic.</p>
+      <p><b>Shared Parent Class</b><br>The base abstract class to be used by the parent pages:</p>
       <highlight-card [code]="code4"></highlight-card>
       <p>There are a few things happening in this component to take note of:</p>
       <ol>
-        <li>When the component initializes, it generates a new list of results – this represents user interaction with a list of items such as filtering or sorting</li>
-        <li>The component logs a message with an identifier to be overridden by the consuming component</li>
+        <li>OnInit we are generating a list of random numbers to emulate state.</li>
+        <li>OnDestroy we are logging an identifier to emulate a teardown of an observable</li>
       </ol>
-      <h3>Detail</h3>
-      <p>Both approaches will use the same detail component:</p>
+      <p><b>Shared Detail Component</b><br>Both approaches will use the same detail component:</p>
       <highlight-card [code]="code5"></highlight-card>
       <p>There are a few things happening in this component to take note of:</p>
       <ol>
-        <li>When the component initializes, it gets the route parameter from the URL to display in the view – this represents any data loading for the detail from a back-end service</li>
-        <li>Generates a new random value to display in the view – this represents some view initialization for the detail page</li>
-        <li>The component logs a message with the route parameter when it is destroyed</li>
+        <li>OnInit we get the route parameters from the URL to display in the view - this emulates any data loading for the detail from a back-end service</li>
+        <li>Also generates a new random value to display in the view - this represents some view initialization for the detail page</li>
+        <li>OnDestroy same as the shared parent class logging an identifier</li>
       </ol>
     </mat-card>
     <mat-card class="next-section-button" routerLink="/parent-child-design">

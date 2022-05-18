@@ -32,13 +32,11 @@ import { AppReuseStrategy } from './app-reuse.strategy';
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: <HighlightOptions>{
-        // fullLibraryLoader: () => import('highlight.js'),
         coreLibraryLoader: () => import('highlight.js/lib/core'),
-        // lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript')
         },
-        themePath: 'assets/css/highlight-themes/gradient-dark.css' // Optional, and useful if you want to change the theme dynamically
+        themePath: 'assets/css/highlight-themes/gradient-dark.css'
       }
     },
     {

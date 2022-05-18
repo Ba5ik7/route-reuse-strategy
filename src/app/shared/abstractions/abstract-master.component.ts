@@ -1,23 +1,18 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 
-interface RamdomObject {
-	number: number,
-	appName: string
-}
-
-@Component({
-  template:''
-})
+@Component({ template: '' })
 export abstract class AbstractMasterComponent implements OnInit, OnDestroy {
 	public randoms!: number[];
 	public abstract displayName: string;
 
 	ngOnInit(): void {
 		this.randoms = [];
-		const numberOfLinks = 5;
-		for (let i = 0; i < numberOfLinks; i++) {
-			this.randoms.push(this.getRandom(100));
-		}
+		// const numberOfLinks = 5;
+		// for (let i = 0; i < numberOfLinks; i++) {
+		// 	this.randoms.push(this.getRandom(100));
+		// }
+		// Have we taken declarative programming to far?
+		Array.from({ length: 5 }, () => this.randoms.push(this.getRandom(100)));
 	}
 
 	getRandom(max: number): number {
