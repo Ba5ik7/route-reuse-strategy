@@ -13,6 +13,7 @@ import { HIGHLIGHT_OPTIONS, HighlightOptions } from 'ngx-highlightjs';
 import { DetailsComponent } from './shared/components/details/details.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './app-reuse.strategy';
+import { TableOfContentsModule } from './shared/components/table-of-contents/table-of-contents.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AppReuseStrategy } from './app-reuse.strategy';
     MatListModule,
     MatIconModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    TableOfContentsModule
   ],
   providers: [
     {
