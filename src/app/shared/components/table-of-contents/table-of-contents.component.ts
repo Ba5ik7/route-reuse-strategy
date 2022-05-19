@@ -33,7 +33,7 @@ interface Link {
   styleUrls: ['./table-of-contents.component.scss'],
   templateUrl: './table-of-contents.component.html'
 })
-export class TableOfContents implements OnInit, AfterViewInit, OnDestroy {
+export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() container: string | undefined;
 
   _linkSections: LinkSection[] = [];
@@ -107,8 +107,8 @@ export class TableOfContents implements OnInit, AfterViewInit, OnDestroy {
     this._links = [];
   }
 
-  addHeaders(sectionName: string, docViewerContent: HTMLElement, sectionIndex = 0) {
-    const links = Array.from(docViewerContent.querySelectorAll('h3, h4'), header => {
+  addHeaders(sectionName: string, docViewerContent: HTMLElement, sectionIndex = 0) {    
+    const links = Array.from(docViewerContent.querySelectorAll('h1, h2, h3, h4'), header => {
       // remove the 'link' icon name from the inner text
       const name = (header as HTMLElement).innerText.trim().replace(/^link/, '');
       const {top} = header.getBoundingClientRect();
@@ -119,7 +119,7 @@ export class TableOfContents implements OnInit, AfterViewInit, OnDestroy {
         id: header.id,
         active: false
       };
-    });
+    });    
 
     this._linkSections[sectionIndex] = {name: sectionName, links};
     this._links.push(...links);

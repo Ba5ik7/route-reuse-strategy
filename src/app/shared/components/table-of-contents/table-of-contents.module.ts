@@ -5,11 +5,12 @@ import { TableOfContentsComponent } from './table-of-contents.component';
 
 
 @NgModule({
-  declarations: [
-    TableOfContentsComponent
-  ],
+  declarations: [TableOfContentsComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [
+    TableOfContentsComponent
+  ],
 })
 export class TableOfContentsModule { }

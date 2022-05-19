@@ -13,7 +13,10 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="app-content">
-      <router-outlet></router-outlet>
+      <div class="router-outlet-wrapper">
+        <router-outlet (activate)="onRouterOutletActivate()"></router-outlet>
+      </div>
+      <table-of-contents class="table-of-contents" #toc container=".container"></table-of-contents>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
