@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "RouteReuseStrategy": {
+    "route-reuse-strategy": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "RouteReuseStrategy:build:production"
+              "browserTarget": "route-reuse-strategy:build:production"
             },
             "development": {
-              "browserTarget": "RouteReuseStrategy:build:development"
+              "browserTarget": "route-reuse-strategy:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "RouteReuseStrategy:build"
+            "browserTarget": "route-reuse-strategy:build"
           }
         },
         "test": {
@@ -112,5 +112,5 @@
       }
     }
   },
-  "defaultProject": "RouteReuseStrategy"
+  "defaultProject": "route-reuse-strategy"
 }
